@@ -1,0 +1,1 @@
+start emulator -avd Pixel_3a_XL_API_R -no-snapshot

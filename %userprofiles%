@@ -1,0 +1,7 @@
+rmdir /s/q android\app\build
+:dir android\app\build
+
+npm i
+
+s\bdebug
+REM start s\bdebug

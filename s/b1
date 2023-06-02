@@ -1,0 +1,5 @@
+export PATH=~/Library/Android/sdk/build-tools/30.0.0-rc4:$PATH
+
+npx jetify && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && s/fixme && cd android && ./gradlew clean && ./gradlew assembleRelease && cd .. && ~/Library/Android/sdk/build-tools/30.0.0-rc4/zipalign -p -f -v 4 ./android/app/build/outputs/apk/release/release-*.apk ./android/app/build/outputs/apk/release/release-zip-aligned-unsigned.apk && npx apk-signer --storepass 'K0l1K0l1!!!' --keypass 'K0l1K0l1!!!' -k conf/release/koli_key -f ./android/app/build/outputs/apk/release/release-*.apk -a key -o KOLI && ls -lah android/app/build/outputs/apk/release/*.apk && open android/app/build/outputs/apk/release
+
+

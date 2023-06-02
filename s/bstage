@@ -1,0 +1,4 @@
+export REACT_NATIVE_MAX_WORKERS=20
+
+#echo ".env.staging" > /tmp/envfile && npx react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'
+echo ".env.staging" > /tmp/envfile && date & cd ios/ && fastlane gym APP_NAME:"KOLI QA" PROFILE_NAME:"koli" --output_name "KOLI QA.ipa" --export_method ad-hoc --scheme "koli" --clean --export_xcargs -allowProvisioningUpdates && cd .. && ls -lah "ios/KOLI QA.ipa" && unzip "ios/KOLI QA.ipa" && date && open ios/

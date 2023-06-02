@@ -1,0 +1,5 @@
+#rm -rf node_modules & npm i & cd ios && rm -Rfd Pods & rm Podfile.lock & pod install && cd ..
+
+#npm run clean && cd ios && xcodebuild clean && cd ..
+rm -rf ~/Library/Caches/CocoaPods
+xcrun simctl erase all

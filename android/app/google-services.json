@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "1075997105817",
+    "firebase_url": "https://koli-231606.firebaseio.com",
+    "project_id": "koli-231606",
+    "storage_bucket": "koli-231606.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075997105817:android:2cf357744fe4418250a208",
+        "android_client_info": {
+          "package_name": "co.koli.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075997105817-2u15mn13akuc1mkjp80nvako1qmjfgd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4RVR9xYibHMD6X1QNf-00BFOFmWDrbkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075997105817-j2sb77fjc64ejvhht56h8are5qmul064.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1075997105817-aivkbduaubncnda270eid7tpggjt6lvc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.koli.reactstaging"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075997105817:android:6c572e77ef6251d550a208",
+        "android_client_info": {
+          "package_name": "co.koli.reactstaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075997105817-2u15mn13akuc1mkjp80nvako1qmjfgd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4RVR9xYibHMD6X1QNf-00BFOFmWDrbkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075997105817-j2sb77fjc64ejvhht56h8are5qmul064.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1075997105817-aivkbduaubncnda270eid7tpggjt6lvc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.koli.reactstaging"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

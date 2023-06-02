@@ -1,0 +1,1 @@
+xcodebuild -workspace koli.xcworkspace -scheme koli -destination generic/platform=iOS build

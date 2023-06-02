@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+	
+  <!--   Core JS Files   -->
+  <script src="http://staging-backend.koliapp.com/assets/js/core/jquery.min.js"></script>
+  </head>
+
+  <body>
+  <style>
+  .loader img {
+    width: 80px;
+    height: 80px;
+    margin-top: -18px;
+    margin-left: -16px;
+}
+.loader {
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 9999999;
+}
+  </style>
+  <div id="preloader" style="display: none;">
+        <div class="loader" id="loader-1"><img src="http://staging-backend.koliapp.com/assets/img/loader.gif"></div>
+    </div>
+  <input type="hidden" name="_token" value="swTW8Tvj8YL2Qis0oT0hPhpTa1eNHehKPbEAsQdL">    <script src="https://www.paypal.com/sdk/js?client-id=ATFnNH4k7SDs8qhATSqEoAymOyB6yI6B1gWPglj02UyzEikBIwkZMGEpB8xuDIynF27Ga44UHiz5Xy3O"> // Replace YOUR_CLIENT_ID with your sandbox client ID
+    </script>
+
+    <div id="paypal-button-container"></div>
+
+    <!-- Add the checkout buttons, set up the order and approve the order -->
+    <script>
+	var amount = "10";
+	var description = "You have received a payout! Thanks for using our service! Campaign ID:1267, KOLI User ID:10296, TxnID:TXNIN647_685401";
+	var ownerId = "10296";  
+	var applicantOwnerId = "2591";   
+	var campaignId = "1267";    
+	var orderID = "OID647";    
+	var txnid = "TXNIN647_685401"; 
+	//var win = window.open();	
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: amount
+              },
+              description : description
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+			$('#preloader').show();
+          return actions.order.capture().then(function(details) { 
+			var status = details['purchase_units'][0].payments['captures'][0].status; 
+			var captureUrl = details['purchase_units'][0].payments['captures'][0]['links'][0].href; 
+			var refundUrl = details['purchase_units'][0].payments['captures'][0]['links'][1].href; 
+			console.log('captureUrl'+captureUrl);
+			var dataform = new FormData();
+			dataform.append('ownerId', ownerId); 
+			dataform.append('applicantOwnerId', applicantOwnerId);
+			dataform.append('campaignId', campaignId);
+			dataform.append('amount', amount);
+			dataform.append('status', status);
+			dataform.append('captureUrl', captureUrl);
+			dataform.append('txnid', txnid);
+			dataform.append('orderID', orderID);
+			dataform.append('description', description);
+			dataform.append('refundUrl', refundUrl);
+			  
+			dataform.append('_token', $("input[name=_token]").val());
+      console.log('dataform: '+dataform);
+      $.get( "http://localhost:54754/orders/" + on + "/contents", 
+       function( data ) {   
+         // do something here with the returned data...
+         // alert( data );
+});
+			$.ajax({
+				url: "https://staging-backend.koliapp.com/campaign-payment/",
+				type:"POST",        
+				data: dataform,
+				dataType: "json",
+				contentType: false,
+				cache: false,
+				processData: false,
+				success: function(results){
+          console.log('results: '+results);
+					if(results.status==1){
+            window.ReactNativeWebView.postMessage(JSON.stringify(results));
+						console.log('results: '+results);
+						//(window["ReactNativeWebView"]).postMessage("Hello Native");
+						//window.ReactNativeWebView.postMessage(JSON.stringify(results));
+						$('#preloader').hide();
+					}else {
+						var failure = {};
+						failure.status=0;
+						failure.error=true;
+						//(window["ReactNativeWebView"]).postMessage("Hello Native");
+						//window.ReactNativeWebView.postMessage(JSON.stringify(failure));
+						$('#preloader').hide();
+					}
+				}
+			});
+			 
+          });
+        }
+      }).render('#paypal-button-container'); // Display payment options on your web page
+    </script>
+  </body>
+</html>

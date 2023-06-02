@@ -1,0 +1,102 @@
+workflows:
+  react-native-android:
+    name: React Native Android
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+        vars:
+            PACKAGE_NAME: "co.koli.android" # <-- Put your package name here e.g. com.domain.myapp
+            BUILD_NAME: 2.55 # need to change whenevenr major version changes like: 2.56, 2.55
+        node: 16.11.1
+        npm: 8.0.0
+    triggering:
+        events:
+            - push
+            - tag
+            - pull_request
+        branch_patterns:
+            - pattern: develop
+              include: true
+              source: true
+    scripts:
+        - name: Install npm dependencies
+          script: |
+            npm i npm@8.0.0
+            npm i patch-package -- force
+        - name: Set Android SDK location
+          script: |
+            echo "sdk.dir=$ANDROID_SDK_ROOT" > "$FCI_BUILD_DIR/android/local.properties"
+        - name: Fix Bundle Script
+          script: |
+            #!/bin/sh
+            node -v
+            java -version
+            sed -i '' 's/<activity/<activity android:exported="true"/g' /Users/builder/clone/node_modules/react-native-paypal/android/src/main/AndroidManifest.xml
+            npx jetify && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+            ./s/fixme
+        - name: Build Android Release
+          script: |
+            #!/bin/sh
+            cd android 
+            ./gradlew clean
+            ./gradlew assembleDebug
+    artifacts:
+        - android/app/build/outputs/**/*.apk
+        - android/app/build/outputs/**/*.aab
+    publishing:
+        email:
+            recipients:
+                - koliapp2019@gmail.com
+            notify:
+              success: true    # To not receive a notification when a build succeeds
+              failure: false    # To not receive a notification when a build fails
+          
+  react-native-ios:
+    name: React Native iOS
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      vars:
+        XCODE_WORKSPACE: "koli.xcworkspace" # <-- Put the name of your Xcode workspace here
+        XCODE_SCHEME: "koli" # <-- Put the name of your Xcode scheme here
+        APPLE_ID: Encrypted(Z0FBQUFBQmc5Wlc1WUNzTFpUVVRSX2QxWTRITDNyMGxTSTRaZmZSVkswbVBPSXZUNjRrY3M2dm5MOEVJQk9qV25mQkhPN0JaV3JJOWw5N0hWOUxXYTVNQU9yc0lTV0JvcENaeWJsclktdWg0SjRsN2NSTThqRFE9)
+        APP_SPECIFIC_PASSWORD: Encrypted(Z0FBQUFBQmc5UzlRb2dHZzAtdm9ScGFxRkh6akVWQi1SRUU3RzhJM2g1dHpHWGg3NElIMkhKclBCeUdWaUJ3ZVR3bjhOMjhJTnJRMV9nTXdmY0Q2cjhVS2FvUFd5bHRkRW45Z2VXQXpJMGZtRVVhRlRhdXVaS2M9)
+        APP_STORE_CONNECT_ISSUER_ID: Encrypted(Z0FBQUFBQmc5U3FyUFo1bG5wd0xGWUtlNGJFQ09XMkhxcGtUSXdmR2FVZWhLRUxrell0cktSaHB6aDMxUlJzYUhaVFI4U2xvT3BNWGxubW81c1MtblV0WThDSEdjOFhBSkJIbmtfZmZ6OVd3dnVJeU0zVVRfTXVoZkk3YTFMTGZ2SnZTRlhKclhPelQ=)
+        APP_STORE_CONNECT_KEY_IDENTIFIER: Encrypted(Z0FBQUFBQmc5U3B4eW9xR3otVThYMDNpLTZTQzRCTWhNSmh1ZnZCWlV4NXo2UktybHZUUl9jQnNzcGctOHFoUWdRMEZHcHV6MEFKRFExN3BCdXJSdXduT0daWExScnNKVnc9PQ==)
+        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(Z0FBQUFBQmc5U3JnVjNKZDRkeDBQVENmTnJac3UwbVc0VHEyV29ZbHdidk1ZMWhFXzJscDNoMG5RSnlnVTQtYV9iZGdiRF9ZVzV4VFdKYUFSVjVUbmtGRldIbklQUW9jbDQ4WFhHa1Jka1J1MlB3b2FZZl80Z0JIS0w5ZkZoNjlYMDlSdTJ0aUlCQm10WERyd2tqQ3RIOHlQOW5Nc3BJRENfWl95dktOeVJSTVZCYmtNdkZ2UTM1TVgwMWttcFhYNnZZWnVIN0xMS21IdVRnTVl3SGVVS1R2N3BtWDk0QVZqQ3VNWTE1V2Z3dXdoaG9PaVpmZFpqQXBsLXVEbEl6NlhrdGxGUUR1dXNPWFkxSDNyUF9QeFcyOGxBS3N3Q3p0dmVPR0ljS1AySGx6MjkzbHhQbFJra3JIM2xfUFlmam9oT2FwNDU5czFPWWNwTnBBY1dRbkJIRlVVR251U2xnYUpsclNTQ1lvaloyVzBvdU1lZnFTeW5GMVNtcFRENU1NeE5RUXJ6N01CbTlSV1F2Xy1LVUVhc21rLWUtN3dsRXcxU001bDI1QU9qRVdvNnVXNTdoWlQxMD0=)
+        CERTIFICATE_PRIVATE_KEY: Encrypted(Z0FBQUFBQmc5WTBTSy1wSWdKYTlLV1hXRy1nR2tXb2dkeklGRDBONFpIcUZOQnlMMEh5a2VZU0tidTlWNUk0Rl93NkJyR1Jra0pxNVhfN2xwOXlkLThCTVdMa09qWkpCUVlzZmxReExsTjVrRWZiZWxvZDIxM0NRMUpvdm5OMTRFYk51RHhyUU1hdFpFOFBwS3htVWo2cS1pc1VuZ3lzNERSS1czaWd1Q25MTmFtVERXbW9NdVF3MEtPaml2cGNRYWQtZkRKNzZtMTF1MkZqWTY5UERzMnl6NTBJOHNYenJ6LUFUS3pYNGlhT1QtcGJXUzBTMHludGN6X0M2NElpeGtfbGI4ZnFFSVExaWc4N3ViRW5RMnNQWEttX0lmRXRsSXZXSmVINGFWZ1RfekE2WnJ5WDhXNVhvMFRCN1llMFluU19takJLMzF4OGdTWGtjY1I0c3VJZGR3VzUxVlBSOWpOZFVoOFpOVWtyQVBLMkVHa05TTG5EVTFmRGF0MkVUQVpITDFNNVVmX1NKRHFFckt6QWtxTFJMeVo5WU4wc093MkFnTUVWNl9XakQtdWhJU2JscHFEd3g0T250MF9IenZwVFNlQ2lldGpPVHBVcWtRa1o1WHBISzYzcXBmb0IxUWNxM2x2ZlNmSkhfcTZKeERtaXU2bW12Nmt4WUNTYXkzeXVxQWVFSGVEWklOSnNiRWVyeFQ3TVBlVldITnpfSUtsa1Q5M1pGTmdXZjctbmZHZUFIYlNLTVA4WTRsUzMyUktxc1o0djQ4NTBkUkd6a3QwRXRMMFFVUERkUkNLbmdLeVQ3TDJ1V3NobUJwRTUzV01IOC1EaDlSOEd6V1AzZGcxdXdQVG9rNFBmcXpiMVVldVl2WHlsRDQzMUhOQThHeWRCSkVpNExTUTFsU0xhYmVSSU1RMTZIclZKdFg1bEtMalo5dnF0Vl9CNUNMVmdFUHdLRVF4QTY5S0hFZzhyQTA0NlpqWjVUS3lQUFJxNUNEbU9NaGlMcUtLV09abzRqbFg5SVVoSndUV0d1cWhUbDktTG1RUUh3M1FBblBqaldFM0tXajdnN0tQR0ZNZE1kUzRtN2RvSlFmTW05VHQ3Tk5lZmpyNmRLNml4QldmeVdna3ZfV3ptSVhpX3FGM3dqMTZjeU84UFpUVlo2bW5DU1FFMWJtQnlIMDlHcHhqdFRpN3NMMG1qQVVhSmZnT2VSNExQb0djUUpWNHF5bnp2YS1uanpKX1dPLXo2eTFmUmhzVnZMdks3d1NDU19NNVFyb2hGWVpuQ2VBOENRdDFIV2JRZnVfVWZleGdONVNKNk12a1NKdmJwbjN4REhNUzJYbkItdGRsb3lVbi1PMkVVa3BFOHJqZUllS3NvTXZFWmFkRTJHWmJKVl85UGl1aEhqRHNzaUN4UlhYd3d1WjBnZXk2cVppQzl5Z3hxVGtGWTd3NVpPS2VsWFhqYlB6Nl9CYzB0MkRBdjJQb3pLcXh4MlMtdEROcW5RS0thTThqVElVUWJxakpzTi02YjdBSTlNa1oxb1ZrYzZXS01mempwT3hWWE9qM3QwRWJ4N3NBdkpVX2xBSkhfdTVKZC0zbDVIVnZkVlR1cEtTTzhGT3Q2ZThOUEt1TXJPTTMya080eUplUHlIVkZvUnBleUV4eTZKbW1aSjRvRkNVVzhaLXd2NWhtTXM0WXByUktnY0s3cnJkOEtQZ1hoQUFPdDJ2S2FLMVU5MFJMOXRlNVdlRWhTb0JUdnp2OFZVSDR1Q2dHcGViM3hvMUNxVDRmWDk2YzdWNzRjdUhobk42dzZuWldyMi1vb1RRNHlnN0ZicDdJbGlmV0V2Q0p4OW8tVy1yNDFGT0FwckJsODk1LU9YdWlOX0lhNHRyVHFKNVA3cWpTYThGU2RFVUxqR3RvQUwxbms1b3pEVEVuQV9qRjYyTmt6bi1EaWZ3U3lGeVZTUGdyYnh2Vmx3c0JROTBQR01fRlVCbkZ3dEJncFJmZWRlLUppX3JOWmFFRlhjUjhVb19jdEk4Uk1xcXlrb1hZWm1ReDNjdTdnM3Z0TnktUm8yOTFQZm5iQ09ReHpmYUpISG5Jck9YVGE5N25oM0oycmNLXzJtXy1HYXFwWWdsUDAtM0Y4X29qVzhuaFZFQzFTdGlTNlpBS1E1R0djSUFmRmt6QmtsdHgwWk54aGdTUldISFB1ajRjODJrQjFWYUlpd1Zad0tVY2I1VGo0NTM1WEZ4VWZicXBGTHI3NkJ2LTA5czdHY2gxbk5vcFB1aVNGdGhHa3VQOTVJbThuNElKd3FXSG9vR0kzUE5HZkhVZ1J6TC1Jakx6b0ZabzVUQ1JzcUt1RDBFV1NwOWo4UV9VVEplZzY4STQ3dThkMURsdlJsdGxEUTBSRjk5VXcwb3c1dUxvWm9jdFFMMGlBNFRlaVlFUzh0QWJ5YTFqU3lYTHhlRmNCTEdna0FWcl9TTGtFRmFxTTE4bHFtbUxfdVlrS25fVzU2YWlCeXFmRXZYTUZ6R2FpWWg0NEM1OThVMlhDejJOTUl5eGNzZkJ3TUdZQmVNUWVBU3RaNi1Ud09SdW9OV28xT2ZveEJsaFNVbUg2THkwMzRWVFdCTTROR2hFZTF0ZFNfaWpmNkFUYU1hUXRiSUM2bXFOMXhBUjdhX1JTQ21PQ0h5dlNPTVhrc3ZxUUZCWEJGMk05WVIzYTZyN0txNEJCQmMzVUUwQ0VyRWtaRENvaG1yTGJ0Z1ZWSGoxSHlQT1RUejNxakRjTWY5a3Z5V0t2bmMtUW93X3lWbDFPUE1NVVI4UHpvaTdsU0dKajJnSm93WFZha1pNQUVzN1NlYUhQQVRJZTZwQXJkelYzY1lsMm91Mm9iejJacVAwalRtcHpsTlNQZDNCUThIR1RVdjJhc2dIM0pzMGV4eHd0amdMczluNWVHdlJQV3ZyVDg2cFZ1THJobktPOUlNNVpkaE96NXV4aVY3UGVVcjBaWG4xbFVpZWdBMjFkOE9Td3Q5WVVadWY4VUEzb1JqbjgtU0QtZDdnekZ4UDVRSWIzVVJZNXZrV2kxdUsxdF80SW8za2dua2FHNTVsLTFBZUlJS0xnZFltRy1JVUZaeVpTV3gxV2pWeEJsaUFVODR3enBqQnhDWWhyRzdtZz0=)
+        BUNDLE_ID: "co.koli" # <-- Put your Bundle Id here e.g com.domain.myapp
+        APP_VERSION: 2.55
+        APP_STORE_APP_ID: 1458269685 # <-- Put the app id number here. This is found in App Store Connect > App > General > App Information (https://appstoreconnect.apple.com/apps/1458269685/appstore/info)
+      node: 16.11.1
+      npm: 8.0.0
+      xcode: 14.3
+      cocoapods: default
+    scripts:
+      - name: Install npm dependencies
+        script: |
+         npm i npm@8.0.0
+      - name: Install CocoaPods dependencies
+        script: |
+         find . -name "Podfile" -execdir pod install \;
+      - name: Apply Patch
+        script: |
+          npm i patch-package
+          npx patch-package react-native --create-issue
+          sed -i '' '2232s/|/||/g' /Users/builder/clone/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
+      - name: Build ipa for Debug
+        script: |
+          xcodebuild build --workspace "$FCI_BUILD_DIR/ios/$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          # xcode-project build-ipa --workspace "$FCI_BUILD_DIR/ios/$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME" 
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      email:
+        recipients:
+          - koliapp2019@gmail.com
+        notify:
+          success: true     # To not receive a notification when a build succeeds
+          failure: false    # To not receive a notification when a build fails

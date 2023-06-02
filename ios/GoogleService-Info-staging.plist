@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1075997105817-aivkbduaubncnda270eid7tpggjt6lvc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1075997105817-aivkbduaubncnda270eid7tpggjt6lvc</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1075997105817-678hv79i37qqhje37tn27q1qbcr3419g.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB6WhqnXGwwylOziYRAHcOUhuf4hEnaMt4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1075997105817</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>co.koli.reactstaging</string>
+	<key>PROJECT_ID</key>
+	<string>koli-231606</string>
+	<key>STORAGE_BUCKET</key>
+	<string>koli-231606.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1075997105817:ios:5efc3e2cadaae06950a208</string>
+	<key>DATABASE_URL</key>
+	<string>https://koli-231606.firebaseio.com</string>
+</dict>
+</plist>

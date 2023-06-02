@@ -1,0 +1,46 @@
+private_lane :ios do
+  desc "Build IPA of #{APP_NAME}"
+  
+  #copy modified AppDelegate.m file
+  sh("cp -rf ../profiles/#{PROFILE_NAME}/ios/AppDelegate.m ../ios/KOLI/")
+  
+  #run react-native command
+  sh("cd .. && react-native bundle - entry-file index.js - platform ios - dev false - bundle-output ios/main.jsbundle - assets-dest ios && cd fastlane")
+  
+  ensure_xcode_version(version: '12.5.1')
+  
+  update_app_identifier(
+    #Optional path to xcodeproj, will use the first .xcodeproj if not set
+      xcodeproj: "ios/koli.xcodeproj", 
+    #Path to info plist file, relative to xcodeproj
+      plist_path: "../ios/KOLI/Info.plist", 
+    #The App Identifier
+      app_identifier: "co.koli.ios.staging.#{PROFILE_NAME}" 
+  )
+  
+  update_project_provisioning(
+    xcodeproj: "ios/koli.xcodeproj",
+    profile:"{PROFILE_NAME}.mobileprovision",
+    target_filter: "KOLI", 
+    build_configuration: "Release"
+ )
+ 
+ sh ("sed -i 's/VERSION_OF_APP/1.2.3/g' ../profile/PROFILE_NAME/.env")
+ 
+ gym(
+  xcargs: "-allowProvisioningUpdates"
+ )
+  
+end
+
+lane :release do
+  api_key = app_store_connect_api_key(
+    key_id: "6XL45V5SP4",
+    issuer_id: "b3ff586b-ae26-49c2-ae06-b1e4240d6562",
+    key_filepath: "../conf/release/Fastlane-AppStoreConnect-AuthKey-6XL45V5SP4.p8",
+    duration: 1200, # optional
+    in_house: false, # optional but may be required if using match/sigh
+  )
+
+  testflight(api_key: api_key)
+end

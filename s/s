@@ -1,0 +1,3 @@
+echo "brew install sonar-scanner"
+
+sonar-scanner -D"project.settings=./sonar-project.properties" -D"sonar.projectKey=kl-mobile" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.login=admin" -D"sonar.password=a"

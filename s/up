@@ -1,0 +1,4 @@
+xcrun altool --upload-app -f "ios/KOLI.ipa" -t ios --username "jamestanms@hotmail.com" --password "frhw-uyoz-wtov-xffu"
+
+#xcrun altool --upload-app -f "ios/KOLI.ipa" -t ios --apiKey 2AQX4S9MGN --apiIssuer b3ff586b-ae26-49c2-ae06-b1e4240d6562
+

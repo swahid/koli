@@ -1,0 +1,1 @@
+echo ".env.production" > /tmp/envfile && date && npm run build:ios && cd ios/ && fastlane gym APP_NAME:"KOLI" PROFILE_NAME:"koli" --export_method $1 --scheme "koli" --clean --export_xcargs -allowProvisioningUpdates && cd .. && ls -lah "ios/KOLI.ipa" && date && open ios/

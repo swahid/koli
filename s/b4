@@ -1,0 +1,1 @@
+xcodebuild -exportArchive -archivePath $PWD/build/koli.xcarchive -exportOptionsPlist exportOptions.plist -exportPath $PWD/build

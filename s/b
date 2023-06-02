@@ -1,0 +1,5 @@
+echo "# 1. Remove the account via Xcode's preferences"
+echo "# 2. remember to set defaults write com.apple.dt.Xcode DVTDeveloperAccountUseKeychainService_2 -bool NO"
+echo "# 1. Re-open Xcode and re-add the account"
+#s/bprod ad-hoc && s/up
+s/bprod app-store

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+  <g id="campain" transform="translate(15210 5210)">
+    <rect id="Rectangle_3666" data-name="Rectangle 3666" width="26" height="26" transform="translate(-15210 -5210)" fill="rgba(207,207,207,0)"/>
+    <g id="Group_15617" data-name="Group 15617" transform="translate(-15274.8 -5208.8)">
+      <path id="Path_8337" data-name="Path 8337" d="M69.665,23.8a.878.878,0,0,1-.865-.888V4.157a.9.9,0,0,1,.253-.629L72.432.06a.852.852,0,0,1,.612-.26H86.935A.878.878,0,0,1,87.8.688V22.912a.878.878,0,0,1-.865.888Zm16.4-1.776V1.576H73.4L70.53,4.525v17.5Z" transform="translate(0)" fill="#252525"/>
+      <path id="Union_73" data-name="Union 73" d="M7396.9,8114.494a.888.888,0,0,1,0-1.776h3.69a.888.888,0,1,1,0,1.776Zm-6.138-3.458a.89.89,0,0,1,0-1.778h9.756a.89.89,0,0,1,0,1.778Zm-.071-3.458a.889.889,0,1,1,0-1.778h3.688a.889.889,0,0,1,0,1.778Z" transform="translate(-7317 -8094.428)" fill="#252525" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

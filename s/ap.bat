@@ -1,0 +1,1 @@
+start %homepath%\AppData\Local\Programs\Appium\Appium.exe

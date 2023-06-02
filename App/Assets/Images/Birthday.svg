@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37">
+  <g id="Birthday" transform="translate(-16 -420)">
+    <rect id="Rectangle_11386" data-name="Rectangle 11386" width="37" height="37" rx="4" transform="translate(16 420)" fill="#ff3681"/>
+    <g id="cake" transform="translate(-17.163 427.042)">
+      <g id="Group_15814" data-name="Group 15814" transform="translate(42.56)">
+        <g id="Group_15813" data-name="Group 15813">
+          <path id="Path_10628" data-name="Path 10628" d="M193.844,5.852A1.951,1.951,0,0,0,195.517,2.9L193.844,0l-1.673,2.9a1.952,1.952,0,0,0,1.673,2.955Z" transform="translate(-185.065)" fill="#fff"/>
+          <path id="Path_10629" data-name="Path 10629" d="M57.191,151.284H52.314v-1.951H50.363v1.951H45.486a2.928,2.928,0,0,0-2.926,2.926v1.5a1.91,1.91,0,0,0,3.263,1.351l2.087-2.082,2.082,2.078a1.956,1.956,0,0,0,2.7,0l2.087-2.078,2.082,2.078a1.91,1.91,0,0,0,3.263-1.351v-1.5A2.943,2.943,0,0,0,57.191,151.284Z" transform="translate(-42.56 -142.505)" fill="#fff"/>
+          <path id="Path_10630" data-name="Path 10630" d="M55.82,319.129h0l-1.049-1.049-1.053,1.049a3.456,3.456,0,0,1-4.77,0L47.9,318.08l-1.053,1.049a3.307,3.307,0,0,1-2.375.99,3.368,3.368,0,0,1-1.912-.6v4.5a.978.978,0,0,0,.975.975H59.141a.978.978,0,0,0,.975-.975v-4.5a3.358,3.358,0,0,1-4.3-.39Z" transform="translate(-42.56 -303.537)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,5 @@
+#npm run test
+#npx jest -t 'should contain a child text'
+#npx jest -i App-test.js
+#npx jest -i MyProfile-test.js
+npx jest -i EditProfile-test.js

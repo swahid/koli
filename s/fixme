@@ -1,0 +1,13 @@
+rm -rf android/app/src/main/res/drawable-mdpi
+rm -rf android/app/src/main/res/drawable-xhdpi
+rm -rf android/app/src/main/res/drawable-xxhdpi
+rm -rf android/app/src/main/res/drawable-xxxhdpi
+rm -rf android/app/src/main/res/drawable-hdpi
+
+rm -rf android/app/src/main/res/raw
+
+#grep -rl "s.dependency 'React/Core'" node_modules/ | xargs sed -i '' 's=React/Core=React-Core=g'
+
+# temporary workaround due to crashing related to the non-supported RN 0.66 c.f. https://github.com/FaridSafi/react-native-gifted-chat/issues/2109
+#cp -f node_modules/react-native-gifted-chat/lib/MessageContainer.js MessageContainer.js
+cp -f MessageContainer.js node_modules/react-native-gifted-chat/lib/MessageContainer.js

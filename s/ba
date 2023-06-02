@@ -1,0 +1,1 @@
+../s/b1 && ../s/b2 && ../s/b3 && ../s/b4 && cd .. && ls -lah ios/build/koli.ipa
